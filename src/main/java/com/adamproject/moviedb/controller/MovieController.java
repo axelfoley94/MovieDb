@@ -62,10 +62,6 @@ public class MovieController {
 			
 			Page <Movie> page = movieService.findPaginated(Integer.parseInt(pageNo), pageSize, sortField, sortDir);
 	        List <Movie> movieList = page.getContent();
-	
-	        System.out.println(page.getTotalPages());
-	        
-	        System.out.println(Integer.parseInt(pageNo));
 	        
 	        model.addAttribute("currentPage", Integer.parseInt(pageNo));
 	        model.addAttribute("totalPages", page.getTotalPages());
