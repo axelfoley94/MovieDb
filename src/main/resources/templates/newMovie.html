@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>Add new Movie</title>
+
+	<div th:replace="common/fragments :: css-importok"></div>
+	
+	<link rel="shortcut icon" type="image/x-icon"	href="../static/icons/the-movie-db-25210-0.jpg" th:href="@{/icons/the-movie-db-25210-0.jpg}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+  </head>
+
+
+<body class="bg-light">
+
+<div th:replace="common/fragments :: navbar"></div>
+
+<div class="container-md">
+	<div class=" text-center">
+		<h2></h2>
+	</div>
+	<h4 class="mb-3">New Movie</h4>
+
+	<form id="myForm" th:action="@{newMovie}" th:object="${newMovie}" class="needs-validation" method="POST" enctype="multipart/form-data" novalidate>
+						
+			<div class="row">
+				<div class="mb-3 col-md-4">
+				  <label for="title">Title</label>
+				  <input th:field="*{title}" type="text" class="form-control" id="title" >
+				   
+				</div>
+				
+				<div class="mb-3 col-md-4">
+				  <label for="runtime">Runtime </label>
+				  <input th:field="*{runtime}" type="number" class="form-control" id="runtime">
+				   
+				</div>
+				
+			</div>
+			
+			<div class="row">
+				<div class="mb-3 col-md-3 ">
+				   <label for="category">Category </label>
+				    <select th:field="*{category}" class="custom-select d-block w-100 required" id="category">
+				      <option value="" selected>Choose...</option>
+				      <option th:each="i:${categories}" th:value="${i}" th:text="${i}">category</option>
+				    </select>   
+				</div>
+				
+				<div class="mb-5 col-md-5 ">
+				   <label for="releseDate">Relese date </label>
+<!-- 				    <input th:field="*{releseDate}" type="date" class="form-control" id="releseDate"> -->
+			    	<input type="date" class="form-control" id="releseDate" th:field="*{releseDate}"/>
+				</div>
+			</div>
+			
+			
+			<div class="row">
+
+				<div class="mb-3 col-md-9 ">
+				   <label for="description">Description </label>
+				    <textarea rows="7" th:field="*{description}" class="form-control" id="description"></textarea>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="mb-4 col-md-5 ">
+				  <label for="category">Cover </label>
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" name="fileImage" id="fileImage" aria-describedby="inputGroupFileAddon01" >
+				    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+				  </div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="mb-4 col-md-4">
+					<h4>Actors </h4>
+				
+				<button type="button" id="new_row_tetel" class="btn btn-success text-white"><i class="fa fa-plus"></i> Add Actor</button><p></p>  
+				
+				<table class="table table-hover" style="text-align:center">
+               	  <thead class="thead-light">
+               		<tr>
+               			<th style="width:20%">Name</th>
+               		</tr>
+               	   </thead>
+               	    <tbody class="actors" id="actors">
+               		
+               		<tr class="item" th:each="actor, status : *{actors}">   	
+	               			<td class="form-group">
+	               				<select class="form-control" id="actorList" th:field="*{[__${status.index}__].alternative_name}"></select>
+	               			</td>       
+               		</tr> 
+             	</tbody>
+               </table>
+				
+				</div>
+			</div>
+						
+		<hr class="mb-4">
+		
+		<div class="row">
+			<div class="col-4">
+				<button class="btn btn-primary btn-lg btn-block mentes-gomb" type="submit">Create Movie</button>
+			</div>
+		</div>
+		
+		
+	</form>
+	
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+	        	        
+	<script>
+            $('#fileImage').on('change',function(e){
+                //get the file name
+
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            })
+            
+        let addRow = function () {
+        let listName = 'actors'; //list name in Catalog.class
+		let list = document.querySelector(".actors");
+        let rowIndex = list.querySelectorAll('.item').length;
+		let fieldsNames = ['id'];
+		
+		let row = document.createElement('tr');
+        row.classList.add('item');
+
+		fieldsNames.forEach((fieldName) => {
+            let col = document.createElement('td');
+            col.classList.add('form-group');
+
+				 let input = document.createElement('select');
+				 input.setAttribute('name', listName + '[' + rowIndex + '].' + fieldName);
+				
+				
+				input.type = 'text';
+				input.defaultValue ="";
+
+	            input.classList.add('form-control');
+	            input.id = fieldName+'[' + rowIndex + ']'
+				
+				col.appendChild(input);
+	            row.appendChild(col);
+        });
+		document.getElementById('actors').appendChild(row);		
+	};
+
+$("#new_row_tetel").click(function(){
+	let check = true;
+	$('.actors').find('.item').each(function () {
+		if(!$.trim($(this).find('#name').val())){
+			check=false;			
+		}
+	});	
+	if(true){
+		
+		addRow();
+		
+		$("table").find('.item').each(function () {
+			$(this).find('select').select2({
+				
+				theme: "classic",
+			    ajax: {
+			        url: '/select2Actors', 
+			        dataType: 'json',
+			        processResults: function (data) {
+			        	return {
+		 	        		results: $.map(data, function(obj) {
+		 	                    return { id: obj.id, text: obj.name };
+		 	                })
+			            };
+			        },
+			        cache: true
+			    }
+			});	
+		});
+	}
+});
+            
+</script>
+
+</body>
+</html>

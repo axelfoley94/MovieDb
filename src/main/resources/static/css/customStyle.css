@@ -1,0 +1,72 @@
+html, 
+body {
+    height: 100%;
+}
+
+.login-container{
+  padding-top: 120px;
+  color:white;
+  display:flex;
+  justify-content:center;
+
+  
+}
+.login-form{
+	background: black;
+	opacity: 0.7;
+ 	border-radius: 15px 50px 30px 5px;
+ 	padding: 30px 40px;
+ 	z-index: 1;
+ 	height: auto;
+ 	width: 500px;
+ 	
+}
+
+.space{
+	z-index: 999;
+	margin: 100px 100px
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+
+.table .thead-dark th{
+	color:green;
+}
+
+.jumbotron-heading{
+	text-decoration: underline;
+}
+
+.proba{
+	color:red;
+}
+
+.container-md {
+	
+	margin: 100px 250px;
+}
+
+.container-small{
+	margin: 100px 100px;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30px 10%;
+}
+
+.movieIndex:hover {
+/* 	transform: translateY(-10px); */
+	transform:scale(110%,110%);
+	box-shadow: 10px 10px 5px grey;
+	
+}

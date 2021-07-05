@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+  
+  <head>
+	<div th:replace="common/fragments :: css-importok"></div>
+  </head>
+  
+  <body>
+    <div>
+   	 <video autoplay muted loop id="myVideo">
+   	 	<source th:src="@{imgs/background.mp4}" type="video/mp4"/>
+   	 </video>
+	</div>
+
+    	<div class="login-container">
+    	
+    	<form class="login-form" th:action="@{/register}" th:object="${newUser}" method="post">
+	    	<input type="hidden" id="osName" name="osName"/>
+	       <div class="centered">
+	       	  <div th:if="${param.error}" class="alert alert-danger"> Helytelen felhasználónév vagy jelszó! </div>
+	       
+		     
+			  <h1 style="text-align: center;">My Movie Db</h1>
+		  </div>
+		  <div class="">
+		  	 <div>
+		  	 	
+<!-- 		  	 	<div th:if="${error}" class="alert alert-danger"> Helytelen felhasználónév vagy jelszó! </div> -->
+		  	 <div th:if="${passwordError}" class="alert alert-warning alert-dismissible fade show text-center " role="alert">
+				  <h4 th:text ="${passwordError}"></h4>
+		  	  </div>
+		  	 
+		  	 <div th:if="${usernameError}" class="alert alert-warning alert-dismissible fade show text-center " role="alert">
+				  <h4 th:text ="${usernameError}"></h4>
+		  	  </div>
+		  	 
+			      <label for="username">Username</label>
+			      
+			      <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Username" required autofocus>
+			      <br />
+			      <label for="jelszo">Password</label>
+			      
+			      <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Password" required>
+			      
+			      <br/>
+			      <label for="jelszo">Password Again</label>
+			      
+			      <input type="password" id="password2" class="form-control" name="password2" th:value="${password2}" placeholder="Password Again" required>
+				  <br />
+				  <button class="btn btn-lg btn-warning btn-block mb-3" type="submit"><i class="fas fa-user-plus"></i> Create new account</button>
+			  </div>
+
+       </div>
+    </form>
+    </div>
+
+     
+    <script>
+    
+    </script>
+    
+  </body>
+  
+  <style>
+ 		.vilagosszurke-hatter {
+ 			background: #E8E8E8;
+ 		}
+ 		
+ 		.atlatszo-feher-hatter {
+ 			background: rgba(255,255,255,0.7);
+ 		}
+ 		
+ 		@media only screen and (min-width: 1400px) {
+ 			.margin-0-100px {
+ 			margin: 0 100px;
+ 			}
+ 		}
+ 		
+ 	</style>
+</html>

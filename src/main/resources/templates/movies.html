@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link rel="shortcut icon" type="image/x-icon"	href="../static/icons/the-movie-db-25210-0.jpg" th:href="@{/icons/the-movie-db-25210-0.jpg}">
+
+    <title>Movies</title>
+    
+    <div th:replace="common/fragments :: css-importok"></div>
+    
+  </head>
+
+  <body>
+	
+	<div th:replace="common/fragments :: navbar"></div>
+	</br>
+	<div class="container">
+		<table class="table table-striped" id="tabla">
+			<thead class="thead-dark sticky-thead">
+				<tr >
+					<th id="megnyitas_oszlop"></th>
+					<th id="mezo_id" ><a class="text-warning" th:href="@{'/movies' + '?pageNo='+ ${currentPage} + '&sortField=id&sortDir=' + ${reverseSortDir}}"> ID <i class="fas fa-sort-alpha-down"></i></a> </th>
+					<th id="mezo_title" > <a class="text-warning" th:href="@{'/movies' + '?pageNo='+ ${currentPage} + '&sortField=title&sortDir=' + ${reverseSortDir}}">Title <i class="fas fa-sort-alpha-down"></i></a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="movie: ${movieList}">
+						<tr>
+							<td> <a class="btn-sm btn-success" th:href="@{'/movie'(id=${movie.id})}"> Megnyitás </a></td>
+							<td th:text="${movie.id}"></td>
+							<td th:text="${movie.title}"></td>
+						</tr>
+				</th:block>
+			</tbody>
+		</table> 
+		
+		<nav aria-label="Page navigation example">
+		  <ul class="pagination">
+		    <li class="page-item"><a class="page-link" th:href="@{'/movies' + '?pageNo='+ ${currentPage-1} + '&sortField=id&sortDir=' + ${reverseSortDir}}">Previous</a></li>
+		    <li class="page-item"><a class="page-link" disabled><p th:text =${currentPage}></p></a></li>
+		    <li class="page-item"><a class="page-link" th:href="@{'/movies' + '?pageNo='+ ${currentPage+1} + '&sortField=id&sortDir=' + ${reverseSortDir}}" >Next</a></li>
+		  </ul>
+		</nav>
+		
+	</div>
+	
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+       
+      </div>
+    </footer>
+
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+		
