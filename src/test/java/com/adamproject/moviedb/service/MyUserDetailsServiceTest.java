@@ -46,12 +46,11 @@ class MyUserDetailsServiceTest {
 	
 	@Test
 	void testLoadUserByUsernameFail() {
-		String username = "noUser";
 		
 		Mockito.when(userRepository.findByUsername(Mockito.anyString())).thenThrow(UsernameNotFoundException.class);
 
 		assertThatThrownBy(() -> {
-			userService.loadUserByUsername(username);
+			userService.loadUserByUsername(Mockito.anyString());
 		}).isInstanceOf(UsernameNotFoundException.class);
 		
 		
