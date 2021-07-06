@@ -1,5 +1,7 @@
 package com.adamproject.moviedb.service;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,17 +24,14 @@ public class MyUserDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 		MyUserDetails myUserDetails = new MyUserDetails(user);
 		
-		if(user == null) {
-			throw new UsernameNotFoundException("user not found");
-		}		
 		return myUserDetails;
 	}
 
 	public User findByUserName(String username){
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsername(username).orElse(null);
 	}
 	
 	public User save(User user) {
