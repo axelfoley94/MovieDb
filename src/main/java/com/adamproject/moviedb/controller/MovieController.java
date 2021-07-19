@@ -31,7 +31,6 @@ import com.adamproject.moviedb.service.MovieService;
 import com.adamproject.moviedb.service.MyUserDetailsService;
 import com.adamproject.moviedb.service.ReviewService;
 
-//@RequestMapping("/movies/")
 @Controller
 public class MovieController {
 	
